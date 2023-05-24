@@ -11,16 +11,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, confusion_matrix, ConfusionMatrixDisplay 
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+import os
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Embedding
 
 ## Reading the data
 dtypes = { 'Unnamed: 0': 'int32', 'drugName': 'category', 'condition': 'category', 'review': 'category', 'rating': 'float16', 'date': 'category', 'usefulCount': 'int16' }
-train_df = pd.read_csv('datasets/drugsComTrain_raw.tsv', sep='\t', dtype=dtypes)
+train_df = pd.read_csv(r'{}\datasets\drugsComTrain_raw.tsv'.format(os.getcwd()), sep='\t', dtype=dtypes)
 # Randomly selecting 80% of the data from the training dataset
 train_df = train_df.sample(frac=0.8, random_state=42)
-test_df = pd.read_csv('datasets/drugsComTest_raw.tsv', sep='\t', dtype=dtypes)
+test_df = pd.read_csv(r'{}\datasets\drugsComTest_raw.tsv'.format(os.getcwd()), sep='\t', dtype=dtypes)
 
 ## Converting date column to datetime format
 train_df['date'], test_df['date'] = pd.to_datetime(train_df['date'], format='%B %d, %Y'), pd.to_datetime(test_df['date'], format='%B %d, %Y')
